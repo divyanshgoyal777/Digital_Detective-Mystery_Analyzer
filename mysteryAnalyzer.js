@@ -68,8 +68,46 @@ function rankSuspects(employees, order = "desc") {
   return suspicionScores;
 }
 
+function generateInvestigationReport(employees, order = "desc") {
+  if (order !== "asc" && order !== "desc") {
+    throw new Error('Invalid order. Use "asc" or "desc".');
+  }
+
+  if (employees.length === 0) {
+    return "No employee records found.";
+  }
+
+  const rankedSuspects = rankSuspects(employees, order);
+
+  let report = "INVESTIGATION REPORT\n";
+  report += "--------------------\n";
+  report += `Employees analyzed: ${employees.length}\n`;
+  report += `Ranking order: ${order.toUpperCase()}\n\n`;
+
+  for (let i = 0; i < rankedSuspects.length; i++) {
+    const suspect = rankedSuspects[i];
+
+    let riskLevel;
+
+    if (suspect.suspicionScore <= 29) {
+      riskLevel = "Low";
+    } else if (suspect.suspicionScore <= 59) {
+      riskLevel = "Medium";
+    } else {
+      riskLevel = "High";
+    }
+
+    report += `${i + 1}. ${suspect.employee.name}\n`;
+    report += `   Suspicion Score: ${suspect.suspicionScore}\n`;
+    report += `   Risk Level: ${riskLevel}\n\n`;
+  }
+
+  return report.trimEnd();
+}
+
 module.exports = {
   calculateSuspicion,
   findMostSuspiciousEmployee,
   rankSuspects,
+  generateInvestigationReport,
 };

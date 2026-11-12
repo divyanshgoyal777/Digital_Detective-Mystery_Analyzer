@@ -16,7 +16,10 @@ const mysteryAnalyzer = require("./mysteryAnalyzer");
 // console.log(mysteryAnalyzer.rankSuspects(data.employees, "asc"));
 
 // Generate investigation reports
-console.log(
-  mysteryAnalyzer.generateInvestigationReport(data.employees, "desc"),
-);
-console.log(mysteryAnalyzer.generateInvestigationReport(data.employees, "asc"));
+// console.log(
+//   mysteryAnalyzer.generateInvestigationReport(data.employees, "desc"),
+// );
+// console.log(mysteryAnalyzer.generateInvestigationReport(data.employees, "asc"));
+
+// Analyze suspicious patterns
+console.log(mysteryAnalyzer.analyzeSuspiciousPatterns(data.employees));

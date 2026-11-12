@@ -105,9 +105,62 @@ function generateInvestigationReport(employees, order = "desc") {
   return report.trimEnd();
 }
 
+function analyzeSuspiciousPatterns(employees) {
+  const totalEmployees = employees.length;
+
+  if (totalEmployees === 0) {
+    return {
+      totalEmployees: 0,
+      highRiskEmployees: [],
+      employeesWithSecretAccess: [],
+      employeesWithMultipleFailures: [],
+      averageSuspicionScore: 0,
+    };
+  }
+
+  const suspicionScores = calculateAllSuspicionScores(employees);
+
+  const highRiskEmployees = [];
+  const employeesWithSecretAccess = [];
+  const employeesWithMultipleFailures = [];
+
+  let totalSuspicionScore = 0;
+
+  for (const suspicion of suspicionScores) {
+    const employee = suspicion.employee;
+    const score = suspicion.suspicionScore;
+
+    totalSuspicionScore += score;
+
+    if (score >= 60) {
+      highRiskEmployees.push(employee.name);
+    }
+
+    if (employee.accessedSecretFile) {
+      employeesWithSecretAccess.push(employee.name);
+    }
+
+    if (employee.failedAttempts > 2) {
+      employeesWithMultipleFailures.push(employee.name);
+    }
+  }
+
+  const averageSuspicionScore =
+    Math.round((totalSuspicionScore / totalEmployees) * 100) / 100;
+
+  return {
+    totalEmployees,
+    highRiskEmployees,
+    employeesWithSecretAccess,
+    employeesWithMultipleFailures,
+    averageSuspicionScore,
+  };
+}
+
 module.exports = {
   calculateSuspicion,
   findMostSuspiciousEmployee,
   rankSuspects,
   generateInvestigationReport,
+  analyzeSuspiciousPatterns,
 };

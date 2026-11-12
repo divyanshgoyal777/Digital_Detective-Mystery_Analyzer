@@ -7,6 +7,10 @@ const mysteryAnalyzer = require("./mysteryAnalyzer");
 // }
 
 // Find the most suspicious employee
-console.log(
-  mysteryAnalyzer.findMostSuspiciousEmployee(data.employees)
-);
+// console.log(
+//   mysteryAnalyzer.findMostSuspiciousEmployee(data.employees)
+// );
+
+// Rank suspects
+console.log(mysteryAnalyzer.rankSuspects(data.employees, "desc"));
+console.log(mysteryAnalyzer.rankSuspects(data.employees, "asc"));
